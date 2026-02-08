@@ -1,0 +1,69 @@
+name: Build Firmware
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  workflow_dispatch:
+    inputs:
+      sdk_version:
+        description: Zephyr SDK version (use LATEST for the latest version)
+        required: true
+        default: LATEST
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        board: ["ch32v307_evt_r1"]
+    runs-on: ubuntu-latest
+    outputs:
+      release_version: ${{ steps.vnumbers.outputs.release_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: deps
+          key: cache-deps-${{ hashFiles('samples/west.yml') }}
+
+      - name: Determine SDK version
+        id: sdk-version
+        run: |
+          SDK_VERSION="${{ github.event.inputs.sdk_version || 'LATEST' }}"
+          if [ "$SDK_VERSION" = "LATEST" ]; then
+            LATEST_VERSION=$(curl -s https://api.github.com/repos/zephyrproject-rtos/sdk-ng/releases/latest | jq -r .tag_name | sed 's/v//')
+            echo "SDK_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
+            echo "Using latest Zephyr SDK version: $LATEST_VERSION"
+          else
+            echo "SDK_VERSION=$SDK_VERSION" >> $GITHUB_OUTPUT
+            echo "Using specified Zephyr SDK version: $SDK_VERSION"
+          fi
+
+      - name: Setup Zephyr project
+        uses: zephyrproject-rtos/action-zephyr-setup@v1
+        with:
+          app-path: samples
+          toolchains: arm-zephyr-eabi:riscv64-zephyr-elf
+
+          sdk-version: ${{ steps.sdk-version.outputs.SDK_VERSION }}
+
+      - name: Build for target board
+        working-directory: samples/usb_cdc
+        run: |
+          west build -b ${{matrix.board}} --pristine -- -DBOARD_ROOT=../../
+
+      - name: Build memory report
+        working-directory: software/app
+        run: |
+          west build -t ram_report
+          west build -t rom_report

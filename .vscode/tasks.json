@@ -1,0 +1,89 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "West Clean Build (ch32v307v_evt_r1)",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "source ${workspaceFolder}/.venv/bin/activate && rm -rf ./build && west build -b ch32v307v_evt_r1/ch32v307/ram_96k usb_cdc -- -DBOARD_ROOT=../../",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/samples",
+                "statusbar": {
+                    "label": "$(wand) Build for ch32v307v_evt_r1"
+                }
+            }
+        },
+        {
+            "label": "West Build",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "source ${workspaceFolder}/.venv/bin/activate && west build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/samples",
+                "statusbar": {
+                    "label": "$(beaker) Build Project"
+                }
+            }
+        },
+        {
+            "label": "West Flash (WCH)",
+            "type": "shell",
+            "command": "wlink --chip CH32V30X flash --address 0x08000000 ./build/zephyr/zephyr.bin",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "West Build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/samples",
+                "statusbar": {
+                    "label": "$(arrow-right) Flash WCH Project"
+                }
+            }
+        },
+        {
+            "label": "West Flash",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.venv/bin/activate && west flash",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "West Build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/samples",
+                "statusbar": {
+                    "label": "$(arrow-right) Flash Project"
+                }
+            }
+        },
+        {
+            "label": "Start OpenOCD",
+            "type": "shell",
+            "command": "openocd_wch -f ${workspaceFolder}/boards/wch/ch32v307_evt_r1/support/openocd.cfg",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/samples",
+                "statusbar": {
+                    "label": "$(bug) Start OpenOCD"
+                }
+            }
+        }
+    ]
+}
