@@ -61,7 +61,7 @@ jobs:
       - name: Build for target board
         working-directory: samples
         run: |
-          west build -b ${{matrix.board}} --pristine ${{matrix.app}} -- -DBOARD_ROOT=../../
+          west build -b ${{matrix.board}} ${{matrix.app}} -- -DBOARD_ROOT=../../
 
       - name: Build memory report
         working-directory: samples
