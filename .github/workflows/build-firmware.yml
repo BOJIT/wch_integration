@@ -19,7 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        board: ["ch32v307_evt_r1"]
+        board: ["ch32v307_evt_r1", "ch32v003f4p6_dev_board"]
+        app: ["barebones", "ethernet", "usb_cdc"]
     runs-on: ubuntu-latest
     outputs:
       release_version: ${{ steps.vnumbers.outputs.release_version }}
@@ -53,17 +54,17 @@ jobs:
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
           app-path: samples
-          toolchains: arm-zephyr-eabi:riscv64-zephyr-elf
+          toolchains: riscv64-zephyr-elf
 
           sdk-version: ${{ steps.sdk-version.outputs.SDK_VERSION }}
 
       - name: Build for target board
-        working-directory: samples/usb_cdc
+        working-directory: samples
         run: |
-          west build -b ${{matrix.board}} --pristine -- -DBOARD_ROOT=../../
+          west build -b ${{matrix.board}} --pristine ${{matrix.app}} -- -DBOARD_ROOT=../../
 
       - name: Build memory report
-        working-directory: software/app
+        working-directory: samples
         run: |
           west build -t ram_report
           west build -t rom_report
