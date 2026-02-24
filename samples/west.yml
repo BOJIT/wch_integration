@@ -7,7 +7,7 @@ manifest:
       # url: https://github.com/zephyrproject-rtos/zephyr
       url: https://github.com/BOJIT/zephyr
       # revision: main
-      revision: driver/ch32_usb
+      revision: driver/ch32v30x_ethernet
 
       import:
         file: west.yml
