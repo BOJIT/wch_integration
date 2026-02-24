@@ -19,8 +19,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        board: ["ch32v307v_evt_r1/ch32v307/ram_96k", "ch32v003f4p6_dev_board"]
-        app: ["barebones", "ethernet", "usb_cdc"]
+        board:
+          - "ch32v003f4p6_dev_board"
+          - "ch32v303vct6_evt"
+          - "ch32v307v_evt_r1/ch32v307/ram_96k"
+        app:
+          - "barebones"
+          - "ethernet"
+          - "ptp"
+          - "usb_cdc"
     runs-on: ubuntu-latest
     outputs:
       release_version: ${{ steps.vnumbers.outputs.release_version }}
@@ -61,7 +68,7 @@ jobs:
       - name: Build for target board
         working-directory: samples
         run: |
-          west build -b ${{matrix.board}} ${{matrix.app}} -- -DBOARD_ROOT=../../
+          west build -b ${{matrix.board}} ${{matrix.app}} -- -DBOARD_ROOT=../../ -DDTC_OVERLAY_FILE=../../boards/ci_fake_memory.overlay
 
       - name: Build memory report
         working-directory: samples
