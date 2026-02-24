@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        board: ["ch32v307v_evt_r1", "ch32v003f4p6_dev_board"]
+        board: ["ch32v307v_evt_r1/ch32v307/ram_96k", "ch32v003f4p6_dev_board"]
         app: ["barebones", "ethernet", "usb_cdc"]
     runs-on: ubuntu-latest
     outputs:

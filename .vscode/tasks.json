@@ -21,6 +21,7 @@
             "options": [
                 "barebones",
                 "ethernet",
+                "ptp",
                 "usb_cdc",
             ],
             "default": "usb_cdc"
