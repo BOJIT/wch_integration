@@ -68,29 +68,9 @@
             }
         },
         {
-            "label": "West Flash (WCH)",
-            "type": "shell",
-            "command": "wlink --chip CH32V30X flash --address 0x08000000 ./build/zephyr/zephyr.bin",
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "dependsOn": [
-                "West Build"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}/samples",
-                "statusbar": {
-                    "label": "$(arrow-right) Flash WCH Project"
-                }
-            }
-        },
-        {
             "label": "West Flash",
             "type": "shell",
-            "command": "source ${workspaceFolder}/.venv/bin/activate && west flash",
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "command": "source ${workspaceFolder}/.venv/bin/activate && west flash --runner wlink",
             "dependsOn": [
                 "West Build"
             ],
@@ -98,6 +78,20 @@
                 "cwd": "${workspaceFolder}/samples",
                 "statusbar": {
                     "label": "$(arrow-right) Flash Project"
+                }
+            }
+        },
+        {
+            "label": "West Flash (USB)",
+            "type": "shell",
+            "command": "source ${workspaceFolder}/.venv/bin/activate && west flash --runner wchisp",
+            "dependsOn": [
+                "West Build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/samples",
+                "statusbar": {
+                    "label": "$(arrow-right) Flash Project (USB)"
                 }
             }
         },
