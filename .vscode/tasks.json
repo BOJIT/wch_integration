@@ -10,7 +10,7 @@
                 "ch32v307v_evt_r1",
                 "ch32v305f_evt_r0",
                 "ch32v303vct6_evt",
-                "nano_ch32v317",
+                "nano_ch32v317/ch32v317/ram_96k",
                 "bluepillplus_ch32v203",
                 "ch32v003f4p6_dev_board",
             ],

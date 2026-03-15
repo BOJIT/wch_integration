@@ -1,47 +1,35 @@
-.. zephyr:board:: ch32v307v_evt_r1
+.. zephyr:board:: nano_ch32v317
 
 Overview
 ********
 
-The `WCH`_ CH32V307V-EVT-R1 is an evaluation board for the RISC-V based CH32V307VCT6
+The MuseLab nanoCH32V317 is an development board for the RISC-V based CH32V317WCU6
 SOC.
 
-The board is equipped with a power LED, reset button, USB port for power, and
-two user LEDs. It also features Ethernet port and built-in programmer.
+The board is equipped with a reset button, a boot button, one user LED, two USB
+ports and an Ethernet Jack.
 
 Hardware
 ********
 
-The QingKe V4F 32-bit RISC-V processor of the WCH CH32V307V-EVT-R1 is clocked by an
+The QingKe V4F 32-bit RISC-V processor of the WCH nanoCH32V317 is clocked by an
 external crystal and runs at 144 MHz.
 
+The chip's most unique feature is an integrated Ethernet MAC and PHY that supports
+100BASE-TX Ethernet.
+
 The `WCH webpage on CH32V30x`_ contains the processor's information and the datasheet.
-WCH CH32V307V-EVT-R1 board schematics can be found on `CH32V307 openwch git repository`_.
+WCH nanoCH32V317 board schematics can be found on `nanoCH32V317 git repository`_.
+
+.. warning::
+
+   There is no USB VBUS diode on the board so be careful not to power a device
+   from USB and external supply simultaneously!
 
 Supported Features
 ==================
 
 .. zephyr:board-supported-hw::
-
-Connections and IOs
-===================
-
-LED
----
-
-Board LEDs are not connected to SoC in layout. For ``blinky`` and ``threads`` sample
-applications you have to use jumper wires to connect them to I/O pins. You also need
-to change leds status to "okay" in :zephyr_file:`boards/wch/ch32v307v_evt_r1/ch32v307v_evt_r1.dts`.
-
-.. list-table:: LED connection
-   :header-rows: 1
-
-   * - J3 header
-     - J4 header
-   * - LED1
-     - PD0
-   * - LED2
-     - PD1
 
 
 Programming and Debugging
@@ -49,38 +37,39 @@ Programming and Debugging
 
 .. zephyr:board-supported-runners::
 
-Applications for the ``ch32v307v_evt_r1`` board can be built and flashed
+Applications for the ``nano_ch32v317`` board can be built and flashed
 in the usual way (see :ref:`build_an_application` and :ref:`application_run`
-for more details). The board includes `WCH LinkE`_ programmer accessible on
-USB-C port P9.
+for more details).
 
 Flashing
 ========
 
 You can use minichlink_ to flash the board. Once ``minichlink`` has been set
 up, build and flash applications as usual (see :ref:`build_an_application` and
-:ref:`application_run` for more details).
+:ref:`application_run` for more details). wlink_ is an alternative tool for using
+the WCH programmers. Alternatively, wchisp_ can be used to flash via the USB bootloader.
 
 Here is an example for the :zephyr:code-sample:`blinky` application.
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
-   :board: ch32v307v-evt-r1
+   :board: nano_ch32v317
    :goals: build flash
 
 
-Or you can use :zephyr:code-sample:`multi-thread-blinky` sample to test both LEDs.
+Or you can use :zephyr:code-sample:`nano_ch32v317` sample to test evaluate the built-in
+Ethernet peripheral
 
 .. zephyr-app-commands::
-   :zephyr-app: samples/basic/threads
-   :board: ch32v307v-evt-r1
+   :zephyr-app: samples/net/dhcpv4_client
+   :board: nano_ch32v317
    :goals: build flash
 
 
 Debugging
 =========
 
-This board can be debugged via ``minichlink``.
+This board can be debugged via ``minichlink`` / ``openocd``.
 
 References
 **********
@@ -90,5 +79,6 @@ References
 .. _WCH: http://www.wch-ic.com
 .. _WCH webpage on CH32V30x: https://www.wch-ic.com/downloads/CH32V20x_30xDS0_PDF.html
 .. _minichlink: https://github.com/cnlohr/ch32fun/tree/master/minichlink
-.. _WCH LinkE: https://www.wch-ic.com/downloads/WCH-LinkUserManual_PDF.html
-.. _CH32V307 openwch git repository: https://github.com/openwch/ch32v307/blob/main/SCHPCB/CH32V307V-R1-1v0/SCH_PCB/CH32V307V-R1.pdf
+.. _wlink: https://github.com/ch32-rs/wlink
+.. _wchisp: https://github.com/ch32-rs/wchisp
+.. _CH32V307 openwch git repository: https://github.com/wuxx/nanoCH32V317
