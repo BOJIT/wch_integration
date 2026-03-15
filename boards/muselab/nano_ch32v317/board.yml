@@ -4,3 +4,8 @@ board:
   vendor: muselab
   socs:
     - name: ch32v317
+      variants:
+        - name: ram_64k
+        - name: ram_96k
+        - name: ram_128k
+        - name: ram_192k
