@@ -9,7 +9,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/samples",
             "MIMode": "gdb",
-            "miDebuggerPath": "${env:HOME}/zephyr-sdk-0.17.0/riscv64-zephyr-elf/bin/riscv64-zephyr-elf-gdb",
+            "miDebuggerPath": "${env:HOME}/zephyr-sdk-1.0.1/gnu/riscv64-zephyr-elf/bin/riscv64-zephyr-elf-gdb",
             "miDebuggerServerAddress": "localhost:3333",
             "setupCommands": [
                 {
@@ -28,7 +28,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/deps/zephyr",
             "MIMode": "gdb",
-            "miDebuggerPath": "${env:HOME}/zephyr-sdk-0.17.0/riscv64-zephyr-elf/bin/riscv64-zephyr-elf-gdb",
+            "miDebuggerPath": "${env:HOME}/zephyr-sdk-1.0.1/gnu/riscv64-zephyr-elf/bin/riscv64-zephyr-elf-gdb",
             "miDebuggerServerAddress": "localhost:3333",
             "setupCommands": [
                 {

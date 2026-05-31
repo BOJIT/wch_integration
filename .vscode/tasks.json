@@ -98,7 +98,7 @@
         {
             "label": "Start OpenOCD",
             "type": "shell",
-            "command": "openocd_wch -f ${workspaceFolder}/boards/wch/ch32v307_evt_r1/support/openocd.cfg",
+            "command": "openocd_wch -f ${workspaceFolder}/boards/support/openocd.cfg",
             "problemMatcher": [
                 "$gcc"
             ],

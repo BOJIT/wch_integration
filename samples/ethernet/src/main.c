@@ -13,7 +13,6 @@
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/clock.h>
-#include <zephyr/net/hostname.h>
 
 #include <zephyr/logging/log.h>
 
@@ -31,8 +30,6 @@ LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 
 int main(void)
 {
-	LOG_INF("Device Hostname: %s", net_hostname_get());
-
 	int64_t target_ms = ((k_uptime_get() + MSEC_PER_SEC) / MSEC_PER_SEC) * MSEC_PER_SEC;
 	while (1) {
 		target_ms += MSEC_PER_SEC;
